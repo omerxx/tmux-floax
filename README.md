@@ -2,4 +2,4 @@ Tmux FloaX
 ============
 Floating panes in Tmux!
 
-![image](./img/floax.png)
+![image](./img/floaxv2.png)
