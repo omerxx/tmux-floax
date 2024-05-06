@@ -1,6 +1,7 @@
 #!/usr/bin/env bash
 
-source scripts/utils.sh
+CURRENT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+source "$CURRENT_DIR/utils.sh"
 
 resize() {
     tmux setenv -g FLOAX_WIDTH $((FLOAX_WIDTH+step))

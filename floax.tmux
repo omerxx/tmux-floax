@@ -1,8 +1,7 @@
 #!/usr/bin/env bash
 
-source scripts/utils.sh
-
 CURRENT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
+source "$CURRENT_DIR/scripts/utils.sh"
 
 tmux bind-key "$(tmux_option_or_fallback "@floax-bind" "p")" run-shell "$CURRENT_DIR/scripts/floax.sh"
 tmux bind-key "$(tmux_option_or_fallback "@floax-bind-menu" "P")" run-shell "$CURRENT_DIR/scripts/menu.sh"
