@@ -30,5 +30,6 @@ tmux_popup() {
             -h "$FLOAX_HEIGHT" \
             -b rounded \
             -E \
-            "tmux attach-session -t scratch"
+            "tmux attach-session -t scratch" 
+            # "tmux switch-client -t scratch"
 }

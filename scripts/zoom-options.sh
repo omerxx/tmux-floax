@@ -4,8 +4,8 @@ CURRENT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 source "$CURRENT_DIR/utils.sh"
 
 resize() {
-    current_width=$(tmux display '#{window_width}')
-    current_height=$(tmux display '#{window_height}')
+    current_width=$(tmux display -p '#{window_width}')
+    current_height=$(tmux display -p '#{window_height}')
     tmux setenv -g FLOAX_WIDTH $((current_width+step))
     tmux setenv -g FLOAX_HEIGHT $((current_height+step))
     tmux detach-client

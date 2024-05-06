@@ -12,6 +12,6 @@ tmux setenv -g FLOAX_HEIGHT "$(tmux_option_or_fallback '@floax-height' '80%')"
 # Options: black, red, green, yellow, blue, magenta, cyan, white
 tmux setenv -g FLOAX_BORDER_COLOR "$(tmux_option_or_fallback '@floax-border-color' 'magenta')" 
 tmux setenv -g FLOAX_TEXT_COLOR "$(tmux_option_or_fallback '@floax-text-color' 'blue')" 
-tmux setenv -g FLOAX_TITLE "$(tmux_option_or_fallback '@floax-title' 'FloaX')" 
+tmux setenv -g FLOAX_TITLE "$(tmux_option_or_fallback '@floax-title' 'FloaX Options: [+/-] change size | [f]ullscreen | [r]eset | [e]mbed')"
 
 eval "$(tmux showenv -s)"
