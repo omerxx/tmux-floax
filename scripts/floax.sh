@@ -2,6 +2,7 @@
 
 source scripts/utils.sh
 
+tmux setenv -g ORIGIN_SESSION "$(tmux display -p '#{session_name}')"
 if [ "$(tmux display-message -p '#{session_name}')" = "scratch" ]; then
     # Detach the client
     tmux detach-client
