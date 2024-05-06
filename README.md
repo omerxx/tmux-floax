@@ -13,12 +13,11 @@ Add this to your `.tmux.conf` and run `Ctrl-I` for TPM to install the plugin.
 set -g @plugin 'omerxx/tmux-floax'
 ```
 
-## Important to know ❗
-The plugin uses Tmux popup window and creates a new session within it. This let's you, the user, enjoy a floating pane that also has Tmux capabilities - splits, windows etc. While most use cases will not require such functionality, do know that it exists.
-
 ## Using the internal menu 📃
 The menu (set with `@floax-bind-menu` and defaults to `<prefix>+P`) will appear when running a floating pane.
 When triggered from a non floating window, the only option currently is to pop the window out to the floating pane.
+Unless disabled, the same keys are also bound to the root table (can be used without Tmux prefix) only when using the floating pane.
+The options are also listed in the title (unless it was configured differently).
 Standard menu options (followed by their hotkey):
 - Size down (-): Decrease overall size
 - Size up (+): Increase overall size
