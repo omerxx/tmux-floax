@@ -5,7 +5,7 @@ source scripts/utils.sh
 CURRENT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 
 tmux bind-key "$(tmux_option_or_fallback "@floax-bind" "p")" run-shell "$CURRENT_DIR/scripts/floax.sh"
-tmux bind-key "$(tmux_option_or_fallback "@floax-bind-menu" "P")" run-shell "$CURRENT_DIR/scripts/zoom.sh"
+tmux bind-key "$(tmux_option_or_fallback "@floax-bind-menu" "P")" run-shell "$CURRENT_DIR/scripts/menu.sh"
 
 tmux setenv -g FLOAX_WIDTH "$(tmux_option_or_fallback '@floax-width' '80%')" 
 tmux setenv -g FLOAX_HEIGHT "$(tmux_option_or_fallback '@floax-height' '80%')" 
