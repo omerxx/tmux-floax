@@ -17,11 +17,6 @@ set -g @plugin 'omerxx/tmux-floax'
 ## Important to know ❗
 The plugin uses Tmux popup window and creates a new session within it. This let's you, the user, enjoy a floating pane that also has Tmux capabilities - splits, windows etc. While most use cases will not require such functionality, do know that it exists.
 
-## Configure ⚙️
-
-The default binding for this plugin is `<prefix>+p` (and `<prefix>+P` for the internal menu)
-You can change it by adding this line with your desired key:
-
 ## Using the internal menu 📃
 The menu (set with `@floax-bind-menu` and defaults to `<prefix>+P`) will appear when running a floating pane.
 When triggered from a non floating window, the only option currently is to pop the window out to the floating pane.
@@ -31,6 +26,12 @@ Standard menu options (followed by their hotkey):
 - Fullscreen: Toggles the pane to 100% of the screen's space
 - Reset: Sets the pane's size back to the default settings
 - Embed: sends the floating panes window to the working space under it
+
+## Configure ⚙️
+
+The default binding for this plugin is `<prefix>+p` (and `<prefix>+P` for the internal menu)
+You can change it by adding this line with your desired key:
+
 ```bash
 set -g @sessionx-bind '<mykey>'
 ```
