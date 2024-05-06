@@ -1,6 +1,7 @@
 #!/usr/bin/env bash
 
-source scripts/utils.sh
+CURRENT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+source "$CURRENT_DIR/utils.sh"
 
 tmux setenv -g ORIGIN_SESSION "$(tmux display -p '#{session_name}')"
 if [ "$(tmux display-message -p '#{session_name}')" = "scratch" ]; then
