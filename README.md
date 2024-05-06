@@ -22,6 +22,15 @@ The plugin uses Tmux popup window and creates a new session within it. This let'
 The default binding for this plugin is `<prefix>+p` (and `<prefix>+P` for the internal menu)
 You can change it by adding this line with your desired key:
 
+## Using the internal menu 📃
+The menu (set with `@floax-bind-menu` and defaults to `<prefix>+P`) will appear when running a floating pane.
+When triggered from a non floating window, the only option currently is to pop the window out to the floating pane.
+Standard menu options (followed by their hotkey):
+- Size down (-): Decrease overall size
+- Size up (+): Increase overall size
+- Fullscreen: Toggles the pane to 100% of the screen's space
+- Reset: Sets the pane's size back to the default settings
+- Embed: sends the floating panes window to the working space under it
 ```bash
 set -g @sessionx-bind '<mykey>'
 ```
