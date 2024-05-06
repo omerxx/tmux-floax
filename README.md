@@ -1,4 +1,4 @@
-Tmux FloaX
+FloaX - Floating panes in Tmux!
 ============
 Floating panes in Tmux!
 
