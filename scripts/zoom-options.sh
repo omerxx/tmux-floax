@@ -6,6 +6,14 @@ source "$CURRENT_DIR/utils.sh"
 resize() {
     current_width=$(tmux display -p '#{window_width}')
     current_height=$(tmux display -p '#{window_height}')
+    if [ $((current_height+step)) -le 0 ] || [ $((current_width+step)) -le 0 ]; then
+        return
+    fi
+    ORIGIN_SESSION="$(envvar_value ORIGIN_SESSION)"
+    if [ $((current_height+step)) -gt "$(tmux display -p -t "$ORIGIN_SESSION" '#{window_height}')" ] || 
+        [ $((current_width+step)) -gt "$(tmux display -p -t "$ORIGIN_SESSION" '#{window_width}')" ]; then
+        return
+    fi
     tmux setenv -g FLOAX_WIDTH $((current_width+step))
     tmux setenv -g FLOAX_HEIGHT $((current_height+step))
     tmux detach-client
