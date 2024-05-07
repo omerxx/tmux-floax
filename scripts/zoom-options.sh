@@ -26,6 +26,23 @@ reset_size() {
     tmux_popup
 }
 
+unlock_bindings() {
+    set_bindings
+    change_popup_title "$DEFAULT_TITLE"
+}
+
+lock_bindings() {
+    unset_bindings
+    tmux bind -n M-u run "$CURRENT_DIR/zoom-options.sh unlock" 
+    change_popup_title "Bindings locked. Unlock with [alt-u]"
+}
+
+change_popup_title() {
+    tmux setenv -g FLOAX_TITLE "$1"
+    tmux detach-client
+    tmux_popup
+}
+
 case "$1" in
     in)
         step=-5
@@ -40,5 +57,11 @@ case "$1" in
         ;;
     reset)
         reset_size
+        ;;
+    lock)
+        lock_bindings
+        ;;
+    unlock)
+        unlock_bindings
         ;;
 esac
