@@ -7,6 +7,7 @@ tmux setenv -g ORIGIN_SESSION "$(tmux display -p '#{session_name}')"
 if [ "$(tmux display-message -p '#{session_name}')" = "scratch" ]; then
     unset_bindings
     change_popup_title "$DEFAULT_TITLE"
+    tmux setenv -g FLOAX_TITLE "$DEFAULT_TITLE"
     tmux detach-client
 else
     # Check if the session 'scratch' exists
