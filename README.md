@@ -65,4 +65,4 @@ set -g @floax-change-path 'true'
 ```
 
 ## Known issues 🐞
-- Sizing to much down will break the script
+- ~Sizing to much down will break the script~
