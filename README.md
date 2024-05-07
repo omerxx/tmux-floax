@@ -61,3 +61,6 @@ set -g @floax-text-color 'blue'
 # You could also "cd -" when the pane is toggled to go back
 set -g @floax-change-path 'true'
 ```
+
+## Known issues 🐞
+- If there was a single scratch window and it was embedded, popping back a window will not work
