@@ -56,5 +56,8 @@ set -g @floax-border-color 'magenta'
 # Optional colors are as shown above in @floax-border-color
 set -g @floax-text-color 'blue'
 
-# The title of the floating pane can remain empty or use the string below
-set -g @floax-title 'FloaX'
+# By default when floax sees a change in session path it'll change the floating pane's path
+# You can disable this by setting it to false
+# You could also "cd -" when the pane is toggled to go back
+set -g @floax-change-path 'true'
+```
