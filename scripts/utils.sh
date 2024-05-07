@@ -22,14 +22,17 @@ FLOAX_TITLE=$(envvar_value FLOAX_TITLE)
 tmux_popup() {
     FLOAX_WIDTH=$(envvar_value FLOAX_WIDTH)
     FLOAX_HEIGHT=$(envvar_value FLOAX_HEIGHT)
-        tmux popup \
-            -S fg="$FLOAX_BORDER_COLOR" \
-            -s fg="$FLOAX_TEXT_COLOR" \
-            -T "$FLOAX_TITLE" \
-            -w "$FLOAX_WIDTH" \
-            -h "$FLOAX_HEIGHT" \
-            -b rounded \
-            -E \
-            "tmux attach-session -t scratch" 
+    # TODO: make this options:
+    current_dir=$(tmux display -p '#{pane_current_path}')
+    tmux send-keys -t scratch "cd $current_dir" C-m
+    tmux popup \
+        -S fg="$FLOAX_BORDER_COLOR" \
+        -s fg="$FLOAX_TEXT_COLOR" \
+        -T "$FLOAX_TITLE" \
+        -w "$FLOAX_WIDTH" \
+        -h "$FLOAX_HEIGHT" \
+        -b rounded \
+        -E \
+        "tmux attach-session -t scratch" 
             # "tmux switch-client -t scratch"
 }
