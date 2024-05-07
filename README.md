@@ -52,15 +52,17 @@ set -g @floax-height '80%'
 # black, red, green, yellow, blue, magenta, cyan, white
 set -g @floax-border-color 'magenta'
 
-# The text color can also be changed, by default it's blue to distinguish from the main window
+# The text color can also be changed, by default it's blue 
+# to distinguish from the main window
 # Optional colors are as shown above in @floax-border-color
 set -g @floax-text-color 'blue'
 
-# By default when floax sees a change in session path it'll change the floating pane's path
+# By default when floax sees a change in session path 
+# it'll change the floating pane's path
 # You can disable this by setting it to false
 # You could also "cd -" when the pane is toggled to go back
 set -g @floax-change-path 'true'
 ```
 
 ## Known issues 🐞
-- If there was a single scratch window and it was embedded, popping back a window will not work
+-
