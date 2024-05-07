@@ -4,7 +4,7 @@ FloaX - Floating panes in Tmux!
 ⚠️ WARNING: This plugin is expermintal and still in early development stages.
 This message will be removed as soon as it's ready to be used in production.
 
-![image](./img/floaxv2.png)
+![image](./img/floaxv3.png)
 
 ## Install 💻
 
