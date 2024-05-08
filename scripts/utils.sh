@@ -20,11 +20,11 @@ FLOAX_TEXT_COLOR=$(envvar_value FLOAX_TEXT_COLOR)
 CURRENT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 FLOAX_CHANGE_PATH=$(envvar_value FLOAX_CHANGE_PATH)
 FLOAX_TITLE=$(envvar_value FLOAX_TITLE)
-DEFAULT_TITLE='FloaX Opts: +/- 󰙖   C-a-f 󰊓   C-a-r 󰊔   C-a-e 󱂬   C-a-d '
+DEFAULT_TITLE='FloaX Opts: C-a-s 󰘕   C-a-b 󰁌   C-a-f 󰊓   C-a-r 󰊔   C-a-e 󱂬   C-a-d '
 
 set_bindings() {
-    tmux bind -n "-" run "$CURRENT_DIR/zoom-options.sh in"
-    tmux bind -n "+" run "$CURRENT_DIR/zoom-options.sh out"
+    tmux bind -n C-M-s run "$CURRENT_DIR/zoom-options.sh in"
+    tmux bind -n c-M-b run "$CURRENT_DIR/zoom-options.sh out"
     tmux bind -n C-M-f run "$CURRENT_DIR/zoom-options.sh full"
     tmux bind -n C-M-r run "$CURRENT_DIR/zoom-options.sh reset"
     tmux bind -n C-M-e run "$CURRENT_DIR/embed.sh embed"
@@ -33,8 +33,8 @@ set_bindings() {
 }
 
 unset_bindings() {
-    tmux unbind -n "-" 
-    tmux unbind -n "+" 
+    tmux unbind -n C-M-s
+    tmux unbind -n C-M-b
     tmux unbind -n C-M-f 
     tmux unbind -n C-M-r 
     tmux unbind -n C-M-e 
