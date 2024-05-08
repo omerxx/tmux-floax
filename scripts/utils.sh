@@ -55,6 +55,15 @@ tmux_popup() {
     if [ "$scratch_path" != "$current_dir" ] && [ "$FLOAX_CHANGE_PATH" = "true" ]; then
         tmux send-keys -R -t scratch "cd $current_dir" C-m
     fi
+    if ! pop; then
+        tmux setenv -g FLOAX_WIDTH "$(tmux_option_or_fallback '@floax-width' '80%')" 
+        tmux setenv -g FLOAX_HEIGHT "$(tmux_option_or_fallback '@floax-height' '80%')" 
+        tmux_popup
+    fi
+
+}
+
+pop() {
     tmux popup \
         -S fg="$FLOAX_BORDER_COLOR" \
         -s fg="$FLOAX_TEXT_COLOR" \
@@ -63,6 +72,5 @@ tmux_popup() {
         -h "$FLOAX_HEIGHT" \
         -b rounded \
         -E \
-        "tmux attach-session -t scratch;clear" 
+        "tmux attach-session -t scratch" 
 }
-
