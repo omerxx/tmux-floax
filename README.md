@@ -31,7 +31,7 @@ The default binding for this plugin is `<prefix>+p` (and `<prefix>+P` for the in
 You can change it by adding this line with your desired key:
 
 ```bash
-set -g @sessionx-bind '<mykey>'
+set -g @floax-bind '<mykey>'
 ```
 
 ### Additional configuration options:
