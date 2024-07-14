@@ -21,6 +21,7 @@ CURRENT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 FLOAX_CHANGE_PATH=$(envvar_value FLOAX_CHANGE_PATH)
 FLOAX_TITLE=$(envvar_value FLOAX_TITLE)
 DEFAULT_TITLE='FloaX: C-a-s 󰘕   C-a-b 󰁌   C-a-f 󰊓   C-a-r 󰑓   C-a-e 󱂬   C-a-d '
+FLOAX_WINDOW_BG=$(envvar_value FLOAX_WINDOW_BG)
 
 set_bindings() {
     tmux bind -n C-M-s run "$CURRENT_DIR/zoom-options.sh in"
@@ -54,6 +55,9 @@ tmux_popup() {
     scratch_path=$(tmux display -t scratch -p '#{pane_current_path}')
     if [ "$scratch_path" != "$current_dir" ] && [ "$FLOAX_CHANGE_PATH" = "true" ]; then
         tmux send-keys -R -t scratch "cd $current_dir" C-m
+    fi
+    if [ FLOAX_WINDOW_BG ]; then
+      tmux set-option -s -t scratch window-style "bg=$FLOAX_WINDOW_BG"
     fi
     if ! pop; then
         tmux setenv -g FLOAX_WIDTH "$(tmux_option_or_fallback '@floax-width' '80%')" 
