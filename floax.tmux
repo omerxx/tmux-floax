@@ -14,5 +14,6 @@ tmux setenv -g FLOAX_BORDER_COLOR "$(tmux_option_or_fallback '@floax-border-colo
 tmux setenv -g FLOAX_TEXT_COLOR "$(tmux_option_or_fallback '@floax-text-color' 'blue')" 
 tmux setenv -g FLOAX_TITLE "$(tmux_option_or_fallback '@floax-title' "${DEFAULT_TITLE}")"
 tmux setenv -g FLOAX_CHANGE_PATH "$(tmux_option_or_fallback '@floax-change-path' 'true')" 
+tmux setenv -g FLOAX_WINDOW_BG "$(tmux_option_or_fallback '@floax-window-bg' '')"
 
 eval "$(tmux showenv -s)"
