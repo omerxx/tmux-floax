@@ -20,7 +20,7 @@ FLOAX_TEXT_COLOR=$(envvar_value FLOAX_TEXT_COLOR)
 CURRENT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 FLOAX_CHANGE_PATH=$(envvar_value FLOAX_CHANGE_PATH)
 FLOAX_TITLE=$(envvar_value FLOAX_TITLE)
-DEFAULT_TITLE='FloaX: C-a-s 󰘕   C-a-b 󰁌   C-a-f 󰊓   C-a-r 󰑓   C-a-e 󱂬   C-a-d '
+DEFAULT_TITLE='FloaX: C-M-s 󰘕   C-M-b 󰁌   C-M-f 󰊓   C-M-r 󰑓   C-M-e 󱂬   C-M-d '
 
 set_bindings() {
     tmux bind -n C-M-s run "$CURRENT_DIR/zoom-options.sh in"
