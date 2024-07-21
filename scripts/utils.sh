@@ -78,14 +78,41 @@ tmux_popup() {
     pop
 }
 
+tmux_version() {
+  tmux -V | cut -d ' ' -f 2
+}
+
+# Checks whether tmux version is >= 3.3
+is_tmux_version_supported() {
+    local version
+    IFS='.' read -r -a version < <(tmux_version)
+
+    if [ "${version[0]}" -gt 3 ]; then
+        return 0
+    fi
+
+    # Minor version can be a number or alphanumeric, e.g. 3.3 vs 3.3a
+    if [ "${version[0]}" -eq 3 ] && [ "${version[1]//[!0-9]}" -ge 3 ]; then
+        return 0
+    fi
+
+    return 1
+}
+
 pop() {
-    tmux popup \
-        -S fg="$FLOAX_BORDER_COLOR" \
-        -s fg="$FLOAX_TEXT_COLOR" \
-        -T "$FLOAX_TITLE" \
-        -w "$FLOAX_WIDTH" \
-        -h "$FLOAX_HEIGHT" \
-        -b rounded \
-        -E \
-        "tmux attach-session -t \"$FLOAX_SESSION_NAME\"" 
+    if is_tmux_version_supported; then
+        tmux popup \
+            -S fg="$FLOAX_BORDER_COLOR" \
+            -s fg="$FLOAX_TEXT_COLOR" \
+            -T "$FLOAX_TITLE" \
+            -w "$FLOAX_WIDTH" \
+            -h "$FLOAX_HEIGHT" \
+            -b rounded \
+            -E \
+            "tmux attach-session -t \"$FLOAX_SESSION_NAME\"" 
+    else
+        tmux display-message \
+            -d 2000 \
+            "FloaX requires tmux version 3.3 or newer"
+    fi
 }
