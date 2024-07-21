@@ -46,7 +46,17 @@ unset_bindings() {
 
 tmux_popup() {
     FLOAX_WIDTH=$(envvar_value FLOAX_WIDTH)
+    if [ "$FLOAX_WIDTH" = "" ]; then
+        FLOAX_WIDTH="$(tmux_option_or_fallback '@floax-width' '80%')" 
+        tmux setenv -g FLOAX_WIDTH "$FLOAX_WIDTH" 
+    fi
+
     FLOAX_HEIGHT=$(envvar_value FLOAX_HEIGHT)
+    if [ "$FLOAX_HEIGHT" = "" ]; then
+        FLOAX_HEIGHT="$(tmux_option_or_fallback '@floax-height' '80%')" 
+        tmux setenv -g FLOAX_HEIGHT "$FLOAX_HEIGHT" 
+    fi
+
     FLOAX_TITLE=$(envvar_value FLOAX_TITLE)
     if [ -z "$FLOAX_TITLE" ]; then
         FLOAX_TITLE="$DEFAULT_TITLE"
@@ -64,12 +74,8 @@ tmux_popup() {
     if [ "$scratch_path" != "$current_dir" ] && [ "$FLOAX_CHANGE_PATH" = "true" ]; then
         tmux send-keys -R -t "$FLOAX_SESSION_NAME" " cd $current_dir" C-m
     fi
-    if ! pop; then
-        tmux setenv -g FLOAX_WIDTH "$(tmux_option_or_fallback '@floax-width' '80%')" 
-        tmux setenv -g FLOAX_HEIGHT "$(tmux_option_or_fallback '@floax-height' '80%')" 
-        tmux_popup
-    fi
 
+    pop
 }
 
 pop() {
