@@ -34,6 +34,15 @@ You can change it by adding this line with your desired key:
 set -g @floax-bind '<mykey>'
 ```
 
+### Root Binding
+
+If you want to toggle floax without `<prefix>` (e.g. `Alt+p`), you can do so by prepending `-n`:
+
+```bash
+# M- means "hold Meta/Alt"
+set -g @floax-bind '-n M-p'
+```
+
 ### Additional configuration options:
 
 ```bash
