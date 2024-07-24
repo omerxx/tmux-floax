@@ -16,6 +16,7 @@ tmux_option_or_fallback() {
 FLOAX_WIDTH=$(envvar_value FLOAX_WIDTH)
 FLOAX_HEIGHT=$(envvar_value FLOAX_HEIGHT)
 FLOAX_BORDER_COLOR=$(envvar_value FLOAX_BORDER_COLOR)
+FLOAX_BORDER_STYLE=$(envvar_value FLOAX_BORDER_STYLE)
 FLOAX_TEXT_COLOR=$(envvar_value FLOAX_TEXT_COLOR)
 CURRENT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 FLOAX_CHANGE_PATH=$(envvar_value FLOAX_CHANGE_PATH)
@@ -70,7 +71,7 @@ pop() {
         -T "$FLOAX_TITLE" \
         -w "$FLOAX_WIDTH" \
         -h "$FLOAX_HEIGHT" \
-        -b rounded \
+        -b "$FLOAX_BORDER_STYLE" \
         -E \
         "tmux attach-session -t scratch" 
 }
