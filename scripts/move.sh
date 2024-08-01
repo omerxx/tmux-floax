@@ -25,5 +25,5 @@ esac;
 # pane_bottom=$(tmux display-message -p '#{pane_bottom}')
 # pane_right=$(tmux display-message -p '#{pane_right}')
 tmux detach-client
-tmux popup -E "$motion" "tmux attach-session -t scratch"
+tmux popup -E "$motion" "tmux attach-session -t \"$FLOAX_SESSION_NAME\""
 # tmux display-message "$pane_top $pane_left $motion"

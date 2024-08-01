@@ -71,6 +71,10 @@ set -g @floax-text-color 'blue'
 # You can disable this by setting it to false
 # You could also "cd -" when the pane is toggled to go back
 set -g @floax-change-path 'true'
+
+# The default session name of the floating pane is 'scratch'
+# You can modify the session name with this option:
+set -g @floax-session-name 'some-other-session-name'
 ```
 
 ## Known issues 🐞
