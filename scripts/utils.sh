@@ -70,7 +70,7 @@ tmux_popup() {
     current_dir=$(tmux display -p '#{pane_current_path}')
     scratch_path=$(tmux display -t scratch -p '#{pane_current_path}')
     if [ "$scratch_path" != "$current_dir" ] && [ "$FLOAX_CHANGE_PATH" = "true" ]; then
-        tmux send-keys -R -t scratch "cd $current_dir" C-m
+        tmux send-keys -R -t "$FLOAX_SESSION_NAME" " cd $current_dir" C-m
     fi
 
     if is_tmux_version_supported; then
