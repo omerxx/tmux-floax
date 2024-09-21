@@ -85,3 +85,11 @@ set -g @floax-session-name 'some-other-session-name'
 
 ## Known issues 🐞
 - ~Sizing too much down will break the script~
+
+## Contributors 🙌
+
+<a href="https://github.com/omerxx/tmux-floax/graphs/contributors">
+  <img src="https://contrib.rocks/image?repo=omerxx/tmux-floax" />
+</a>
+
+Made with [contrib.rocks](https://contrib.rocks).
