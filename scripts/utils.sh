@@ -57,6 +57,7 @@ tmux_popup() {
         FLOAX_SESSION_NAME="$DEFAULT_SESSION_NAME"
     fi
 
+    tmux set-option -t "$FLOAX_SESSION_NAME" detach-on-destroy on
 
     # TODO: make this optional:
     current_dir=$(tmux display -p '#{pane_current_path}')
