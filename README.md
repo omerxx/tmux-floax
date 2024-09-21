@@ -61,7 +61,10 @@ set -g @floax-width '80%'
 set -g @floax-height '80%'
 
 # The border color can be changed, these are the colors supported by Tmux:
-# black, red, green, yellow, blue, magenta, cyan, white
+# black, red, green, yellow, blue, magenta, cyan, white for the standard
+# terminal colors; brightred, brightyellow and so on for the bright variants;
+# colour0/color0 to colour255/color255 for the colors from the 256-color
+# palette; default for the default color; or a hexadecimal RGB color such as #882244.
 set -g @floax-border-color 'magenta'
 
 # The text color can also be changed, by default it's blue 
