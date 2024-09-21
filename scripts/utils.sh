@@ -100,6 +100,7 @@ pop() {
         FLOAX_SESSION_NAME="$DEFAULT_SESSION_NAME"
     fi
 
+    tmux set-option -t "$FLOAX_SESSION_NAME" detach-on-destroy on
     tmux popup \
         -S fg="$FLOAX_BORDER_COLOR" \
         -s fg="$FLOAX_TEXT_COLOR" \
