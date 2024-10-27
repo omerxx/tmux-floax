@@ -11,7 +11,7 @@ Please email me at hi@omerxx.com 🙏
 
 Tmux version 3.3 or newer is required to use this plugin.
 
-Add this to your `.tmux.conf` and run `Ctrl-I` for TPM to install the plugin.
+Add this to your `.tmux.conf` and run `<prefix>+I` for TPM to install the plugin.
 ```conf
 set -g @plugin 'omerxx/tmux-floax'
 ```
