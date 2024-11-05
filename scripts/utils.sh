@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
 envvar_value() {
-    tmux showenv -g "$1" | cut -d '=' -f 2
+    tmux showenv -g "$1" | cut -d '=' -f 2-
 }
 
 tmux_option_or_fallback() {
