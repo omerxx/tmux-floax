@@ -14,6 +14,8 @@ tmux_option_or_fallback() {
 }
 
 FLOAX_WIDTH=$(envvar_value FLOAX_WIDTH)
+FLOAX_X=$(envvar_value FLOAX_X)
+FLOAX_Y=$(envvar_value FLOAX_Y)
 FLOAX_HEIGHT=$(envvar_value FLOAX_HEIGHT)
 FLOAX_BORDER_COLOR=$(envvar_value FLOAX_BORDER_COLOR)
 FLOAX_TEXT_COLOR=$(envvar_value FLOAX_TEXT_COLOR)
