@@ -103,9 +103,13 @@ set -g @floax-session-name 'some-other-session-name'
 
 # Change the title of the floating window
 set -g @floax-title 'floax'
+
+# If you want to enable the status bar, you can set this to 'on'
+set -g @floax-status-bar 'off'
 ```
 
 ## Known issues 🐞
+
 - ~Sizing too much down will break the script~
 
 ## Contributors 🙌
