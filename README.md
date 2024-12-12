@@ -52,6 +52,9 @@ set -g @floax-bind '-n M-p'
 # Setting the main key to toggle the floating pane on and off
 set -g @floax-bind '<my-key>'
 
+# Setting the prefix key for quick actions in the floating pane (zoom in, zoom out, reset, lock, unlock, etc)
+set -g @floax-prefix 'C-M'
+
 # When the pane is toggled, using this bind pops a menu with additional options
 # such as resize, fullscreen, resetting to defaults and more.
 set -g @floax-bind-menu 'P'
@@ -59,6 +62,22 @@ set -g @floax-bind-menu 'P'
 # The default width and height of the floating pane
 set -g @floax-width '80%'
 set -g @floax-height '80%'
+
+# The default location of the floating pane.
+# Both may be a row or column number,
+# or one of the following special values (from 'man tmux' or https://man.openbsd.org/OpenBSD-current/man1/tmux.1#display-menu):
+    # Value    Flag    Meaning
+    # C        Both    The centre of the terminal
+    # R        -x      The right side of the terminal
+    # P        Both    The bottom left of the pane
+    # M        Both    The mouse position
+    # W        Both    The window position on the status line
+    # S        -y      The line above or below the status line
+For instance, to make it locate in the top-right
+# set -g @floax-width 'R'
+# set -g @floax-height '0'
+set -g @floax-x 'C'
+set -g @floax-y 'C'
 
 # The border color can be changed, these are the colors supported by Tmux:
 # black, red, green, yellow, blue, magenta, cyan, white for the standard
@@ -84,9 +103,13 @@ set -g @floax-session-name 'some-other-session-name'
 
 # Change the title of the floating window
 set -g @floax-title 'floax'
+
+# If you want to enable the status bar, you can set this to 'on'
+set -g @floax-status-bar 'off'
 ```
 
 ## Known issues 🐞
+
 - ~Sizing too much down will break the script~
 
 ## Contributors 🙌

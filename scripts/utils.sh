@@ -14,34 +14,37 @@ tmux_option_or_fallback() {
 }
 
 FLOAX_WIDTH=$(envvar_value FLOAX_WIDTH)
+FLOAX_X=$(envvar_value FLOAX_X)
+FLOAX_Y=$(envvar_value FLOAX_Y)
 FLOAX_HEIGHT=$(envvar_value FLOAX_HEIGHT)
 FLOAX_BORDER_COLOR=$(envvar_value FLOAX_BORDER_COLOR)
 FLOAX_TEXT_COLOR=$(envvar_value FLOAX_TEXT_COLOR)
 CURRENT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 FLOAX_CHANGE_PATH=$(envvar_value FLOAX_CHANGE_PATH)
+FLOAX_PREFIX=$(envvar_value FLOAX_PREFIX)
 FLOAX_TITLE=$(envvar_value FLOAX_TITLE)
-DEFAULT_TITLE='FloaX: C-M-s 󰘕   C-M-b 󰁌   C-M-f 󰊓   C-M-r 󰑓   C-M-e 󱂬   C-M-d '
+DEFAULT_TITLE="FloaX: ${FLOAX_PREFIX}-s 󰘕   ${FLOAX_PREFIX}-b 󰁌   ${FLOAX_PREFIX}-f 󰊓   ${FLOAX_PREFIX}-r 󰑓   ${FLOAX_PREFIX}-e 󱂬   ${FLOAX_PREFIX}-d "
 FLOAX_SESSION_NAME=$(envvar_value FLOAX_SESSION_NAME)
 DEFAULT_SESSION_NAME='scratch'
 
 set_bindings() {
-    tmux bind -n C-M-s run "$CURRENT_DIR/zoom-options.sh in"
-    tmux bind -n c-M-b run "$CURRENT_DIR/zoom-options.sh out"
-    tmux bind -n C-M-f run "$CURRENT_DIR/zoom-options.sh full"
-    tmux bind -n C-M-r run "$CURRENT_DIR/zoom-options.sh reset"
-    tmux bind -n C-M-e run "$CURRENT_DIR/embed.sh embed"
-    tmux bind -n C-M-d run "$CURRENT_DIR/zoom-options.sh lock" 
-    tmux bind -n C-M-u run "$CURRENT_DIR/zoom-options.sh unlock"
+    tmux bind -n "${FLOAX_PREFIX}-s" run "$CURRENT_DIR/zoom-options.sh in"
+    tmux bind -n "${FLOAX_PREFIX}-b" run "$CURRENT_DIR/zoom-options.sh out"
+    tmux bind -n "${FLOAX_PREFIX}-f" run "$CURRENT_DIR/zoom-options.sh full"
+    tmux bind -n "${FLOAX_PREFIX}-r" run "$CURRENT_DIR/zoom-options.sh reset"
+    tmux bind -n "${FLOAX_PREFIX}-e" run "$CURRENT_DIR/embed.sh embed"
+    tmux bind -n "${FLOAX_PREFIX}-d" run "$CURRENT_DIR/zoom-options.sh lock"
+    tmux bind -n "${FLOAX_PREFIX}-u" run "$CURRENT_DIR/zoom-options.sh unlock"
 }
 
 unset_bindings() {
-    tmux unbind -n C-M-s
-    tmux unbind -n C-M-b
-    tmux unbind -n C-M-f 
-    tmux unbind -n C-M-r 
-    tmux unbind -n C-M-e 
-    tmux unbind -n C-M-d 
-    tmux unbind -n C-M-u 
+    tmux unbind -n "${FLOAX_PREFIX}-s"
+    tmux unbind -n "${FLOAX_PREFIX}-b"
+    tmux unbind -n "${FLOAX_PREFIX}-f"
+    tmux unbind -n "${FLOAX_PREFIX}-r"
+    tmux unbind -n "${FLOAX_PREFIX}-e"
+    tmux unbind -n "${FLOAX_PREFIX}-d"
+    tmux unbind -n "${FLOAX_PREFIX}-u"
 }
 
 tmux_version() {
@@ -105,9 +108,11 @@ pop() {
         -S fg="$FLOAX_BORDER_COLOR" \
         -s fg="$FLOAX_TEXT_COLOR" \
         -T "$FLOAX_TITLE" \
+        -x "$FLOAX_X" \
+        -y "$FLOAX_Y" \
         -w "$FLOAX_WIDTH" \
         -h "$FLOAX_HEIGHT" \
         -b rounded \
         -E \
-        "tmux attach-session -t \"$FLOAX_SESSION_NAME\"" 
+        "tmux attach-session -t \"$FLOAX_SESSION_NAME\""
 }

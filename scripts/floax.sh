@@ -2,6 +2,7 @@
 
 CURRENT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 source "$CURRENT_DIR/utils.sh"
+FLOAX_STATUS_BAR=$(envvar_value FLOAX_STATUS_BAR)
 
 tmux setenv -g ORIGIN_SESSION "$(tmux display -p '#{session_name}')"
 if [ "$(tmux display-message -p '#{session_name}')" = "$FLOAX_SESSION_NAME" ]; then
@@ -26,7 +27,7 @@ else
     else
         # Create a new session named 'scratch' and attach to it
         tmux new-session -d -c "$(tmux display-message -p '#{pane_current_path}')" -s "$FLOAX_SESSION_NAME"
-        tmux set-option -t "$FLOAX_SESSION_NAME" status off
+        tmux set-option -t "$FLOAX_SESSION_NAME" status "${FLOAX_STATUS_BAR}"
         tmux_popup
     fi
 fi

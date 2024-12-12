@@ -41,8 +41,8 @@ unlock_bindings() {
 
 lock_bindings() {
     unset_bindings
-    tmux bind -n C-M-u run "$CURRENT_DIR/zoom-options.sh unlock" 
-    change_popup_title "Bindings locked. Unlock with [Ctrl-Alt-u]"
+    tmux bind -n "${FLOAX_PREFIX}-u" run "$CURRENT_DIR/zoom-options.sh unlock"
+    change_popup_title "Bindings locked. Unlock with [${FLOAX_PREFIX}-u]"
 }
 
 change_popup_title() {
