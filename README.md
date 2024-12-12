@@ -52,6 +52,9 @@ set -g @floax-bind '-n M-p'
 # Setting the main key to toggle the floating pane on and off
 set -g @floax-bind '<my-key>'
 
+# Setting the prefix key for quick actions in the floating pane (zoom in, zoom out, reset, lock, unlock, etc)
+set -g @floax-prefix 'C-M'
+
 # When the pane is toggled, using this bind pops a menu with additional options
 # such as resize, fullscreen, resetting to defaults and more.
 set -g @floax-bind-menu 'P'
