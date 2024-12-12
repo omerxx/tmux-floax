@@ -105,9 +105,11 @@ pop() {
         -S fg="$FLOAX_BORDER_COLOR" \
         -s fg="$FLOAX_TEXT_COLOR" \
         -T "$FLOAX_TITLE" \
+        -x "$FLOAX_X" \
+        -y "$FLOAX_Y" \
         -w "$FLOAX_WIDTH" \
         -h "$FLOAX_HEIGHT" \
         -b rounded \
         -E \
-        "tmux attach-session -t \"$FLOAX_SESSION_NAME\"" 
+        "tmux attach-session -t \"$FLOAX_SESSION_NAME\""
 }

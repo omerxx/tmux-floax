@@ -60,6 +60,18 @@ set -g @floax-bind-menu 'P'
 set -g @floax-width '80%'
 set -g @floax-height '80%'
 
+# The default location of the floating pane.
+# Both may be a row or column number, or one of the following special values (from 'man tmux' or https://man.openbsd.org/OpenBSD-current/man1/tmux.1#display-menu):
+    # Value    Flag    Meaning
+    # C        Both    The centre of the terminal
+    # R        -x      The right side of the terminal
+    # P        Both    The bottom left of the pane
+    # M        Both    The mouse position
+    # W        Both    The window position on the status line
+    # S        -y      The line above or below the status line
+set -g @floax-width 'C'
+set -g @floax-height 'C'
+
 # The border color can be changed, these are the colors supported by Tmux:
 # black, red, green, yellow, blue, magenta, cyan, white for the standard
 # terminal colors; brightred, brightyellow and so on for the bright variants;
