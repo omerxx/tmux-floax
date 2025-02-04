@@ -15,6 +15,10 @@ if [ "$(tmux display-message -p '#{session_name}')" = "$FLOAX_SESSION_NAME" ]; t
         FLOAX_SESSION_NAME="$DEFAULT_SESSION_NAME"
     fi
 
+    if [ -z "$FLOAX_BORDER_TYPE" ]; then
+        FLOAX_BORDER_TYPE="$DEFAULT_BORDER_TYPE"
+    fi
+
     change_popup_title "$FLOAX_TITLE"
     tmux setenv -g FLOAX_TITLE "$FLOAX_TITLE"
     tmux detach-client
