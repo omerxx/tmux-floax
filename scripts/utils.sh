@@ -109,5 +109,6 @@ pop() {
         -h "$FLOAX_HEIGHT" \
         -b rounded \
         -E \
-        "tmux attach-session -t \"$FLOAX_SESSION_NAME\"" 
+        "tmux attach-session -t \"$FLOAX_SESSION_NAME\""
+    tmux kill-session -t "$FLOAX_SESSION_NAME"
 }
