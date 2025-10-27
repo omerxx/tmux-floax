@@ -36,7 +36,7 @@ reset_size() {
 
 unlock_bindings() {
     set_bindings
-    change_popup_title "$DEFAULT_TITLE"
+    change_popup_title "$FLOAX_TITLE"
 }
 
 lock_bindings() {
