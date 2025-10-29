@@ -11,7 +11,7 @@ Please email me at hi@omerxx.com 🙏
 
 Tmux version 3.3 or newer is required to use this plugin.
 
-Add this to your `.tmux.conf` and run `<prefix>+I` for TPM to install the plugin.
+Add this to your `.tmux.conf` and run `Ctrl-I` for TPM to install the plugin.
 ```conf
 set -g @plugin 'omerxx/tmux-floax'
 ```
@@ -60,6 +60,10 @@ set -g @floax-bind-menu 'P'
 set -g @floax-width '80%'
 set -g @floax-height '80%'
 
+# The border type can be changed, these are the types supported by Tmux:
+# single, rounded, double
+set -g @floax-border-type 'rounded'
+
 # The border color can be changed, these are the colors supported by Tmux:
 # black, red, green, yellow, blue, magenta, cyan, white for the standard
 # terminal colors; brightred, brightyellow and so on for the bright variants;
@@ -67,12 +71,12 @@ set -g @floax-height '80%'
 # palette; default for the default color; or a hexadecimal RGB color such as #882244.
 set -g @floax-border-color 'magenta'
 
-# The text color can also be changed, by default it's blue 
+# The text color can also be changed, by default it's blue
 # to distinguish from the main window
 # Optional colors are as shown above in @floax-border-color
 set -g @floax-text-color 'blue'
 
-# By default when floax sees a change in session path 
+# By default when floax sees a change in session path
 # it'll change the floating pane's path
 # You can disable this by setting it to false
 # You could also "cd -" when the pane is toggled to go back
@@ -81,9 +85,6 @@ set -g @floax-change-path 'true'
 # The default session name of the floating pane is 'scratch'
 # You can modify the session name with this option:
 set -g @floax-session-name 'some-other-session-name'
-
-# Change the title of the floating window
-set -g @floax-title 'floax'
 ```
 
 ## Known issues 🐞

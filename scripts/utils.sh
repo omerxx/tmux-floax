@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
 envvar_value() {
-    tmux showenv -g "$1" | cut -d '=' -f 2-
+    tmux showenv -g "$1" | cut -d '=' -f 2
 }
 
 tmux_option_or_fallback() {
@@ -13,15 +13,19 @@ tmux_option_or_fallback() {
 	echo "$option_value"
 }
 
+CURRENT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+
 FLOAX_WIDTH=$(envvar_value FLOAX_WIDTH)
 FLOAX_HEIGHT=$(envvar_value FLOAX_HEIGHT)
+FLOAX_BORDER_TYPE=$(envvar_value FLOAX_BORDER_TYPE)
 FLOAX_BORDER_COLOR=$(envvar_value FLOAX_BORDER_COLOR)
 FLOAX_TEXT_COLOR=$(envvar_value FLOAX_TEXT_COLOR)
-CURRENT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 FLOAX_CHANGE_PATH=$(envvar_value FLOAX_CHANGE_PATH)
 FLOAX_TITLE=$(envvar_value FLOAX_TITLE)
-DEFAULT_TITLE='FloaX: C-M-s 󰘕   C-M-b 󰁌   C-M-f 󰊓   C-M-r 󰑓   C-M-e 󱂬   C-M-d '
 FLOAX_SESSION_NAME=$(envvar_value FLOAX_SESSION_NAME)
+
+DEFAULT_TITLE='FloaX: C-M-s 󰘕   C-M-b 󰁌   C-M-f 󰊓   C-M-r 󰑓   C-M-e 󱂬   C-M-d '
+DEFAULT_BORDER_TYPE='rounded'
 DEFAULT_SESSION_NAME='scratch'
 
 set_bindings() {
@@ -30,18 +34,18 @@ set_bindings() {
     tmux bind -n C-M-f run "$CURRENT_DIR/zoom-options.sh full"
     tmux bind -n C-M-r run "$CURRENT_DIR/zoom-options.sh reset"
     tmux bind -n C-M-e run "$CURRENT_DIR/embed.sh embed"
-    tmux bind -n C-M-d run "$CURRENT_DIR/zoom-options.sh lock" 
+    tmux bind -n C-M-d run "$CURRENT_DIR/zoom-options.sh lock"
     tmux bind -n C-M-u run "$CURRENT_DIR/zoom-options.sh unlock"
 }
 
 unset_bindings() {
     tmux unbind -n C-M-s
     tmux unbind -n C-M-b
-    tmux unbind -n C-M-f 
-    tmux unbind -n C-M-r 
-    tmux unbind -n C-M-e 
-    tmux unbind -n C-M-d 
-    tmux unbind -n C-M-u 
+    tmux unbind -n C-M-f
+    tmux unbind -n C-M-r
+    tmux unbind -n C-M-e
+    tmux unbind -n C-M-d
+    tmux unbind -n C-M-u
 }
 
 tmux_version() {
@@ -75,7 +79,7 @@ tmux_popup() {
 
     if is_tmux_version_supported; then
         if ! pop; then
-            tmux setenv -g FLOAX_WIDTH "$(tmux_option_or_fallback '@floax-width' '80%')" 
+            tmux setenv -g FLOAX_WIDTH "$(tmux_option_or_fallback '@floax-width' '80%')"
             tmux setenv -g FLOAX_HEIGHT "$(tmux_option_or_fallback '@floax-height' '80%')"
             pop
         fi
@@ -100,6 +104,11 @@ pop() {
         FLOAX_SESSION_NAME="$DEFAULT_SESSION_NAME"
     fi
 
+    FLOAX_BORDER_TYPE=$(envvar_value FLOAX_BORDER_TYPE)
+    if [ -z "$FLOAX_BORDER_TYPE" ]; then
+        FLOAX_BORDER_TYPE="$DEFAULT_BORDER_TYPE"
+    fi
+
     tmux set-option -t "$FLOAX_SESSION_NAME" detach-on-destroy on
     tmux popup \
         -S fg="$FLOAX_BORDER_COLOR" \
@@ -107,7 +116,7 @@ pop() {
         -T "$FLOAX_TITLE" \
         -w "$FLOAX_WIDTH" \
         -h "$FLOAX_HEIGHT" \
-        -b rounded \
+        -b "$FLOAX_BORDER_TYPE" \
         -E \
-        "tmux attach-session -t \"$FLOAX_SESSION_NAME\"" 
+        "tmux attach-session -t \"$FLOAX_SESSION_NAME\""
 }
