@@ -12,12 +12,12 @@ embed() {
         # otherwise the session dies and popping back won't work
         tmux neww -d
     fi
-    tmux movew -t "$ORIGIN_SESSION"
+    tmux movew -t "$ORIGIN_SESSION":
     tmux detach-client
 }
 
 pop() {
-    tmux movew -t "$FLOAX_SESSION_NAME"
+    tmux movew -t "$FLOAX_SESSION_NAME":
     tmux_popup
 }
 
