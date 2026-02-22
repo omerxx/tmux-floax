@@ -66,11 +66,14 @@ is_tmux_version_supported() {
 }
 
 tmux_popup() {
+    if [ -z "$FLOAX_SESSION_NAME" ]; then
+        FLOAX_SESSION_NAME="$DEFAULT_SESSION_NAME"
+    fi
     # TODO: make this optional:
     current_dir=$(tmux display -p '#{pane_current_path}')
-    scratch_path=$(tmux display -t scratch -p '#{pane_current_path}')
+    scratch_path=$(tmux display -t "$FLOAX_SESSION_NAME" -p '#{pane_current_path}')
     if [ "$scratch_path" != "$current_dir" ] && [ "$FLOAX_CHANGE_PATH" = "true" ]; then
-        tmux send-keys -R -t "$FLOAX_SESSION_NAME" " cd $current_dir" C-m
+        tmux send-keys -R -t "$FLOAX_SESSION_NAME" " cd \"$current_dir\"" C-m
     fi
 
     if is_tmux_version_supported; then
