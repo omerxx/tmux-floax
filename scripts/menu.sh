@@ -1,8 +1,13 @@
 #!/usr/bin/env bash
 
 CURRENT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
+source "$CURRENT_DIR/utils.sh"
+
 # Function to check if the current session name matches "scratch"
 check_current_session() {
+    if [ -z "$FLOAX_SESSION_NAME" ]; then
+        FLOAX_SESSION_NAME="$DEFAULT_SESSION_NAME"
+    fi
     current_session=$(tmux display-message -p '#{session_name}')
     if [ "$current_session" != "$FLOAX_SESSION_NAME" ]; then
         tmux menu \

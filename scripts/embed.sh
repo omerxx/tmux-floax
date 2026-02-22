@@ -3,6 +3,12 @@
 CURRENT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 source "$CURRENT_DIR/utils.sh"
 
+# Must set these BEFORE using them in functions
+ORIGIN_SESSION="$(envvar_value ORIGIN_SESSION)"
+if [ -z "$FLOAX_SESSION_NAME" ]; then
+    FLOAX_SESSION_NAME="$DEFAULT_SESSION_NAME"
+fi
+
 embed() {
     unset_bindings
     number_of_windows=$(tmux list-windows -t "$FLOAX_SESSION_NAME" | wc -l)
@@ -17,6 +23,11 @@ embed() {
 }
 
 pop() {
+    # Ensure scratch session exists before trying to move window to it
+    if ! tmux has-session -t "$FLOAX_SESSION_NAME" 2>/dev/null; then
+        tmux new-session -d -s "$FLOAX_SESSION_NAME"
+        tmux set-option -t "$FLOAX_SESSION_NAME" status off
+    fi
     tmux movew -t "$FLOAX_SESSION_NAME"
     tmux_popup
 }
@@ -30,5 +41,3 @@ case "$action" in
         pop
         ;;
 esac
-
-ORIGIN_SESSION="$(envvar_value ORIGIN_SESSION)"
