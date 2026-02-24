@@ -1,10 +1,6 @@
 FloaX - Floating panes in Tmux!
 ============
 
-🛑 Looking for help!
-Floax needs your help, looking for assistance maintaining this repo, issues and pull requests.
-Please email me at hi@omerxx.com 🙏
-
 ![image](./img/floaxv3.png)
 
 ## Install 💻
