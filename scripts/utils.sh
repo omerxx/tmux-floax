@@ -45,7 +45,7 @@ unset_bindings() {
 }
 
 tmux_version() {
-  tmux -V | cut -d ' ' -f 2
+  tmux -V | cut -d ' ' -f 2 | sed 's/[^0-9.]//g'
 }
 
 # Checks whether tmux version is >= 3.3
