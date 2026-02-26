@@ -17,6 +17,11 @@ FLOAX_WIDTH=$(envvar_value FLOAX_WIDTH)
 FLOAX_HEIGHT=$(envvar_value FLOAX_HEIGHT)
 FLOAX_BORDER_COLOR=$(envvar_value FLOAX_BORDER_COLOR)
 FLOAX_TEXT_COLOR=$(envvar_value FLOAX_TEXT_COLOR)
+DEFAULT_TEXT_COLOR=$(
+    tmux show-options -gv message-style | sed -n 's/.*fg=\([^,]*\).*/\1/p' ||
+        tmux show-options -gv status-style | sed -n 's/.*fg=\([^,]*\).*/\1/p' ||
+        echo "default"
+)
 CURRENT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 FLOAX_CHANGE_PATH=$(envvar_value FLOAX_CHANGE_PATH)
 FLOAX_TITLE=$(envvar_value FLOAX_TITLE)
@@ -101,6 +106,11 @@ pop() {
     FLOAX_SESSION_NAME=$(envvar_value FLOAX_SESSION_NAME)
     if [ -z "$FLOAX_SESSION_NAME" ]; then
         FLOAX_SESSION_NAME="$DEFAULT_SESSION_NAME"
+    fi
+
+    FLOAX_TEXT_COLOR=$(envvar_value FLOAX_TEXT_COLOR)
+    if [ -z "$FLOAX_TEXT_COLOR" ]; then
+        FLOAX_TEXT_COLOR="$DEFAULT_TEXT_COLOR"
     fi
 
     tmux set-option -t "$FLOAX_SESSION_NAME" detach-on-destroy on
