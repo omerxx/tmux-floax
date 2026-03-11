@@ -36,12 +36,20 @@ reset_size() {
 
 unlock_bindings() {
     set_bindings
-    change_popup_title "$FLOAX_TITLE"
+    local saved_title
+    saved_title="$(tmux showenv -g FLOAX_TITLE_SAVED 2>/dev/null | cut -d '=' -f 2-)"
+    if [ -n "$saved_title" ]; then
+        change_popup_title "$saved_title"
+        tmux setenv -gu FLOAX_TITLE_SAVED
+    else
+        change_popup_title "$DEFAULT_TITLE"
+    fi
 }
 
 lock_bindings() {
+    tmux setenv -g FLOAX_TITLE_SAVED "$FLOAX_TITLE"
     unset_bindings
-    tmux bind -n C-M-u run "$CURRENT_DIR/zoom-options.sh unlock" 
+    tmux bind -n C-M-u run "$CURRENT_DIR/zoom-options.sh unlock"
     change_popup_title "Bindings locked. Unlock with [Ctrl-Alt-u]"
 }
 
