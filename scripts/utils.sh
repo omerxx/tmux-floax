@@ -19,6 +19,7 @@ FLOAX_BORDER_COLOR=$(envvar_value FLOAX_BORDER_COLOR)
 FLOAX_TEXT_COLOR=$(envvar_value FLOAX_TEXT_COLOR)
 CURRENT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 FLOAX_CHANGE_PATH=$(envvar_value FLOAX_CHANGE_PATH)
+FLOAX_SHELL_COMMANDS=$(envvar_value FLOAX_SHELL_COMMANDS)
 FLOAX_TITLE=$(envvar_value FLOAX_TITLE)
 DEFAULT_TITLE='FloaX: C-M-s 󰘕   C-M-b 󰁌   C-M-f 󰊓   C-M-r 󰑓   C-M-e 󱂬   C-M-d '
 FLOAX_SESSION_NAME=$(envvar_value FLOAX_SESSION_NAME)
@@ -72,7 +73,23 @@ tmux_popup() {
     # TODO: make this optional:
     current_dir=$(tmux display -p '#{pane_current_path}')
     scratch_path=$(tmux display -t "$FLOAX_SESSION_NAME" -p '#{pane_current_path}')
-    if [ "$scratch_path" != "$current_dir" ] && [ "$FLOAX_CHANGE_PATH" = "true" ]; then
+    scratch_cmd=$(tmux display -t "$FLOAX_SESSION_NAME" -p '#{pane_current_command}')
+
+    # Only send `cd` if a known shell is in the foreground of the floax pane.
+    # Otherwise send-keys would be swallowed by whatever TUI is running
+    # (nvim, lazygit, htop, ...), which is almost never what the user wants.
+    shells="${FLOAX_SHELL_COMMANDS:-zsh bash fish sh dash ksh}"
+    is_shell=false
+    for s in $shells; do
+        if [ "$scratch_cmd" = "$s" ]; then
+            is_shell=true
+            break
+        fi
+    done
+
+    if [ "$scratch_path" != "$current_dir" ] \
+       && [ "$FLOAX_CHANGE_PATH" = "true" ] \
+       && [ "$is_shell" = "true" ]; then
         tmux send-keys -R -t "$FLOAX_SESSION_NAME" " cd \"$current_dir\"" C-m
     fi
 
