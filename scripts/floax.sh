@@ -3,12 +3,10 @@
 CURRENT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 source "$CURRENT_DIR/utils.sh"
 
-tmux setenv -g ORIGIN_SESSION "$(tmux display -p '#{session_name}')"
-if [ -z "$FLOAX_SESSION_NAME" ]; then
-    FLOAX_SESSION_NAME="$DEFAULT_SESSION_NAME"
-fi
+current_session="$(tmux display -p '#{session_name}')"
 
-if [ "$(tmux display-message -p '#{session_name}')" = "$FLOAX_SESSION_NAME" ]; then
+if is_floax_session "$current_session"; then
+    # We're inside a floax popup — detach to close it
     unset_bindings
 
     if [ -z "$FLOAX_TITLE" ]; then
@@ -18,15 +16,17 @@ if [ "$(tmux display-message -p '#{session_name}')" = "$FLOAX_SESSION_NAME" ]; t
     tmux setenv -g FLOAX_TITLE "$FLOAX_TITLE"
     tmux detach-client
 else
+    # We're in a regular session — open a per-session popup
+    tmux setenv -g ORIGIN_SESSION "$current_session"
+    effective_session="$(floax_effective_session "$current_session")"
+
     set_bindings
 
-    # Check if the session 'scratch' exists
-    if tmux has-session -t "$FLOAX_SESSION_NAME" 2>/dev/null; then
-        tmux_popup
+    if tmux has-session -t "$effective_session" 2>/dev/null; then
+        tmux_popup "$effective_session"
     else
-        # Create a new session named 'scratch' and attach to it
-        tmux new-session -d -c "$(tmux display-message -p '#{pane_current_path}')" -s "$FLOAX_SESSION_NAME"
-        tmux set-option -t "$FLOAX_SESSION_NAME" status off
-        tmux_popup
+        tmux new-session -d -c "$(tmux display-message -p '#{pane_current_path}')" -s "$effective_session"
+        tmux set-option -t "$effective_session" status off
+        tmux_popup "$effective_session"
     fi
 fi

@@ -78,6 +78,12 @@ set -g @floax-change-path 'true'
 # You can modify the session name with this option:
 set -g @floax-session-name 'some-other-session-name'
 
+# By default, all tmux sessions share a single floating pane session.
+# When per-session mode is enabled, each tmux session gets its own
+# floating pane (e.g. 'scratch_myproject', 'scratch_dev').
+# This is useful when working with multiple sessions simultaneously.
+set -g @floax-per-session 'true'
+
 # Change the title of the floating window
 set -g @floax-title 'floax'
 ```

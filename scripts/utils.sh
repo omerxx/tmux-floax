@@ -23,10 +23,36 @@ FLOAX_TITLE=$(envvar_value FLOAX_TITLE)
 DEFAULT_TITLE='FloaX: C-M-s 󰘕   C-M-b 󰁌   C-M-f 󰊓   C-M-r 󰑓   C-M-e 󱂬   C-M-d '
 FLOAX_SESSION_NAME=$(envvar_value FLOAX_SESSION_NAME)
 DEFAULT_SESSION_NAME='scratch'
+FLOAX_PER_SESSION=$(envvar_value FLOAX_PER_SESSION)
+
+# Returns the effective floax session name.
+# When per-session is enabled: <base>_<origin>
+# When per-session is disabled: <base> (global)
+floax_effective_session() {
+    local origin="$1"
+    local base="${FLOAX_SESSION_NAME:-$DEFAULT_SESSION_NAME}"
+    if [ "$FLOAX_PER_SESSION" = "true" ]; then
+        echo "${base}_${origin}"
+    else
+        echo "$base"
+    fi
+}
+
+# Checks if a session name is a floax session
+is_floax_session() {
+    local session="$1"
+    local base="${FLOAX_SESSION_NAME:-$DEFAULT_SESSION_NAME}"
+    if [ "$FLOAX_PER_SESSION" = "true" ]; then
+        [[ "$session" == "${base}_"* ]]
+    else
+        [[ "$session" == "$base" ]]
+    fi
+}
+
 
 set_bindings() {
     tmux bind -n C-M-s run "$CURRENT_DIR/zoom-options.sh in"
-    tmux bind -n c-M-b run "$CURRENT_DIR/zoom-options.sh out"
+    tmux bind -n C-M-b run "$CURRENT_DIR/zoom-options.sh out"
     tmux bind -n C-M-f run "$CURRENT_DIR/zoom-options.sh full"
     tmux bind -n C-M-r run "$CURRENT_DIR/zoom-options.sh reset"
     tmux bind -n C-M-e run "$CURRENT_DIR/embed.sh embed"
@@ -66,21 +92,19 @@ is_tmux_version_supported() {
 }
 
 tmux_popup() {
-    if [ -z "$FLOAX_SESSION_NAME" ]; then
-        FLOAX_SESSION_NAME="$DEFAULT_SESSION_NAME"
-    fi
+    local target_session="${1:-${FLOAX_SESSION_NAME:-$DEFAULT_SESSION_NAME}}"
     # TODO: make this optional:
     current_dir=$(tmux display -p '#{pane_current_path}')
-    scratch_path=$(tmux display -t "$FLOAX_SESSION_NAME" -p '#{pane_current_path}')
+    scratch_path=$(tmux display -t "$target_session" -p '#{pane_current_path}')
     if [ "$scratch_path" != "$current_dir" ] && [ "$FLOAX_CHANGE_PATH" = "true" ]; then
-        tmux send-keys -R -t "$FLOAX_SESSION_NAME" " cd \"$current_dir\"" C-m
+        tmux send-keys -R -t "$target_session" " cd \"$current_dir\"" C-m
     fi
 
     if is_tmux_version_supported; then
-        if ! pop; then
-            tmux setenv -g FLOAX_WIDTH "$(tmux_option_or_fallback '@floax-width' '80%')" 
+        if ! pop "$target_session"; then
+            tmux setenv -g FLOAX_WIDTH "$(tmux_option_or_fallback '@floax-width' '80%')"
             tmux setenv -g FLOAX_HEIGHT "$(tmux_option_or_fallback '@floax-height' '80%')"
-            pop
+            pop "$target_session"
         fi
     else
         tmux display-message \
@@ -90,6 +114,8 @@ tmux_popup() {
 }
 
 pop() {
+    local target_session="${1:-${FLOAX_SESSION_NAME:-$DEFAULT_SESSION_NAME}}"
+
     FLOAX_WIDTH=$(envvar_value FLOAX_WIDTH)
     FLOAX_HEIGHT=$(envvar_value FLOAX_HEIGHT)
 
@@ -98,12 +124,7 @@ pop() {
         FLOAX_TITLE="$DEFAULT_TITLE"
     fi
 
-    FLOAX_SESSION_NAME=$(envvar_value FLOAX_SESSION_NAME)
-    if [ -z "$FLOAX_SESSION_NAME" ]; then
-        FLOAX_SESSION_NAME="$DEFAULT_SESSION_NAME"
-    fi
-
-    tmux set-option -t "$FLOAX_SESSION_NAME" detach-on-destroy on
+    tmux set-option -t "$target_session" detach-on-destroy on
     tmux popup \
         -S fg="$FLOAX_BORDER_COLOR" \
         -s fg="$FLOAX_TEXT_COLOR" \
@@ -112,5 +133,5 @@ pop() {
         -h "$FLOAX_HEIGHT" \
         -b rounded \
         -E \
-        "tmux attach-session -t \"$FLOAX_SESSION_NAME\"" 
+        "tmux attach-session -t \"$target_session\""
 }

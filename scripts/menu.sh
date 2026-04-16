@@ -3,13 +3,10 @@
 CURRENT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 source "$CURRENT_DIR/utils.sh"
 
-# Function to check if the current session name matches "scratch"
+# Function to check if the current session is a floax session
 check_current_session() {
-    if [ -z "$FLOAX_SESSION_NAME" ]; then
-        FLOAX_SESSION_NAME="$DEFAULT_SESSION_NAME"
-    fi
     current_session=$(tmux display-message -p '#{session_name}')
-    if [ "$current_session" != "$FLOAX_SESSION_NAME" ]; then
+    if ! is_floax_session "$current_session"; then
         tmux menu \
             "pop current window" p "run \"$CURRENT_DIR/embed.sh pop\"" 
         exit 0
@@ -17,7 +14,6 @@ check_current_session() {
 }
 
 check_current_session
-CURRENT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 tmux menu \
     "size down" - "run \"$CURRENT_DIR/zoom-options.sh in\"" \
     "size up" + "run \"$CURRENT_DIR/zoom-options.sh out\"" \
