@@ -26,7 +26,7 @@ DEFAULT_SESSION_NAME='scratch'
 
 set_bindings() {
     tmux bind -n C-M-s run "$CURRENT_DIR/zoom-options.sh in"
-    tmux bind -n c-M-b run "$CURRENT_DIR/zoom-options.sh out"
+    tmux bind -n C-M-b run "$CURRENT_DIR/zoom-options.sh out"
     tmux bind -n C-M-f run "$CURRENT_DIR/zoom-options.sh full"
     tmux bind -n C-M-r run "$CURRENT_DIR/zoom-options.sh reset"
     tmux bind -n C-M-e run "$CURRENT_DIR/embed.sh embed"
