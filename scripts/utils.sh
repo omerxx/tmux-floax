@@ -26,7 +26,7 @@ DEFAULT_SESSION_NAME='scratch'
 
 set_bindings() {
     tmux bind -n C-M-s run "$CURRENT_DIR/zoom-options.sh in"
-    tmux bind -n c-M-b run "$CURRENT_DIR/zoom-options.sh out"
+    tmux bind -n C-M-b run "$CURRENT_DIR/zoom-options.sh out"
     tmux bind -n C-M-f run "$CURRENT_DIR/zoom-options.sh full"
     tmux bind -n C-M-r run "$CURRENT_DIR/zoom-options.sh reset"
     tmux bind -n C-M-e run "$CURRENT_DIR/embed.sh embed"
@@ -89,6 +89,34 @@ tmux_popup() {
     fi
 }
 
+pop_with_client() {
+    local target_client="$1"
+    FLOAX_WIDTH=$(envvar_value FLOAX_WIDTH)
+    FLOAX_HEIGHT=$(envvar_value FLOAX_HEIGHT)
+
+    FLOAX_TITLE=$(envvar_value FLOAX_TITLE)
+    if [ -z "$FLOAX_TITLE" ]; then
+        FLOAX_TITLE="$DEFAULT_TITLE"
+    fi
+
+    FLOAX_SESSION_NAME=$(envvar_value FLOAX_SESSION_NAME)
+    if [ -z "$FLOAX_SESSION_NAME" ]; then
+        FLOAX_SESSION_NAME="$DEFAULT_SESSION_NAME"
+    fi
+
+    tmux set-option -t "$FLOAX_SESSION_NAME" detach-on-destroy on
+    tmux popup \
+        -c "$target_client" \
+        -S fg="$FLOAX_BORDER_COLOR" \
+        -s fg="$FLOAX_TEXT_COLOR" \
+        -T "$FLOAX_TITLE" \
+        -w "$FLOAX_WIDTH" \
+        -h "$FLOAX_HEIGHT" \
+        -b rounded \
+        -E \
+        "tmux attach-session -t \"$FLOAX_SESSION_NAME\""
+}
+
 pop() {
     FLOAX_WIDTH=$(envvar_value FLOAX_WIDTH)
     FLOAX_HEIGHT=$(envvar_value FLOAX_HEIGHT)
@@ -112,5 +140,5 @@ pop() {
         -h "$FLOAX_HEIGHT" \
         -b rounded \
         -E \
-        "tmux attach-session -t \"$FLOAX_SESSION_NAME\"" 
+        "tmux attach-session -t \"$FLOAX_SESSION_NAME\""
 }
