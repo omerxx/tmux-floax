@@ -20,6 +20,7 @@ FLOAX_TEXT_COLOR=$(envvar_value FLOAX_TEXT_COLOR)
 CURRENT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 FLOAX_CHANGE_PATH=$(envvar_value FLOAX_CHANGE_PATH)
 FLOAX_TITLE=$(envvar_value FLOAX_TITLE)
+FLOAX_HIDE_TITLE=$(envvar_value FLOAX_HIDE_TITLE)
 DEFAULT_TITLE='FloaX: C-M-s 󰘕   C-M-b 󰁌   C-M-f 󰊓   C-M-r 󰑓   C-M-e 󱂬   C-M-d '
 FLOAX_SESSION_NAME=$(envvar_value FLOAX_SESSION_NAME)
 DEFAULT_SESSION_NAME='scratch'
@@ -92,6 +93,7 @@ tmux_popup() {
 pop() {
     FLOAX_WIDTH=$(envvar_value FLOAX_WIDTH)
     FLOAX_HEIGHT=$(envvar_value FLOAX_HEIGHT)
+    FLOAX_HIDE_TITLE=$(envvar_value FLOAX_HIDE_TITLE)
 
     FLOAX_TITLE=$(envvar_value FLOAX_TITLE)
     if [ -z "$FLOAX_TITLE" ]; then
@@ -104,13 +106,18 @@ pop() {
     fi
 
     tmux set-option -t "$FLOAX_SESSION_NAME" detach-on-destroy on
-    tmux popup \
-        -S fg="$FLOAX_BORDER_COLOR" \
-        -s fg="$FLOAX_TEXT_COLOR" \
-        -T "$FLOAX_TITLE" \
-        -w "$FLOAX_WIDTH" \
-        -h "$FLOAX_HEIGHT" \
-        -b rounded \
-        -E \
-        "tmux attach-session -t \"$FLOAX_SESSION_NAME\"" 
+    local popup_args=(
+        -S "fg=$FLOAX_BORDER_COLOR"
+        -s "fg=$FLOAX_TEXT_COLOR"
+        -w "$FLOAX_WIDTH"
+        -h "$FLOAX_HEIGHT"
+        -b rounded
+        -E
+    )
+    if [ "$FLOAX_HIDE_TITLE" != "true" ]; then
+        popup_args+=(-T "$FLOAX_TITLE")
+    else
+        tmux set-window-option -t "$FLOAX_SESSION_NAME" pane-border-status off
+    fi
+    tmux popup "${popup_args[@]}" "tmux attach-session -t \"$FLOAX_SESSION_NAME\""
 }

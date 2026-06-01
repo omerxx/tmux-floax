@@ -80,6 +80,9 @@ set -g @floax-session-name 'some-other-session-name'
 
 # Change the title of the floating window
 set -g @floax-title 'floax'
+
+# Hide the title bar and pane border status by modifying this option
+set -g @floax-hide-title 'true'
 ```
 
 ## Known issues 🐞

@@ -15,5 +15,6 @@ tmux setenv -g FLOAX_TEXT_COLOR "$(tmux_option_or_fallback '@floax-text-color' '
 tmux setenv -g FLOAX_TITLE "$(tmux_option_or_fallback '@floax-title' "${DEFAULT_TITLE}")"
 tmux setenv -g FLOAX_CHANGE_PATH "$(tmux_option_or_fallback '@floax-change-path' 'true')" 
 tmux setenv -g FLOAX_SESSION_NAME "$(tmux_option_or_fallback '@floax-session-name' "${DEFAULT_SESSION_NAME}")"
+tmux setenv -g FLOAX_HIDE_TITLE "$(tmux_option_or_fallback '@floax-hide-title' 'false')"
 
 eval "$(tmux showenv -s)"
