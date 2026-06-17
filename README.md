@@ -74,6 +74,14 @@ set -g @floax-text-color 'blue'
 # You could also "cd -" when the pane is toggled to go back
 set -g @floax-change-path 'true'
 
+# When @floax-change-path is true, floax sends a `cd <path>` to the floating
+# pane's shell. If a TUI (nvim, lazygit, htop, ...) is in the foreground of
+# that pane, those keys would be interpreted by the TUI instead — usually
+# breaking it. Floax therefore only sends `cd` when the pane's foreground
+# process matches one of the known shell commands below. Override the list
+# to add other shells (e.g. nushell, xonsh):
+set -g @floax-shell-commands 'zsh bash fish sh dash ksh'
+
 # The default session name of the floating pane is 'scratch'
 # You can modify the session name with this option:
 set -g @floax-session-name 'some-other-session-name'
